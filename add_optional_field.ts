@@ -5,19 +5,19 @@ interface MyTypeDataModel {
 }
 
 coreSetup.savedObjects.registerType({
-  name: 'my-type',
-  mappings: {
-    properties: {
-      foo: { type: 'keyword' },
+    name: 'my-type',
+    mappings: {
+        properties: {
+            foo: { type: 'keyword' },
+        },
     },
-  },
-  versions: {
-    0: {
-        schema: schema.object({
-            foo: schema.string()
-        }, { unknowns: 'ignore' }),
-    },
-  }
+    versions: {
+        0: {
+            schema: schema.object({
+                foo: schema.string()
+            }, { unknowns: 'ignore' }),
+        },
+    }
 });
 
 // Kibana N + 1
@@ -27,24 +27,19 @@ interface MyTypeDataModel {
 }
 
 coreSetup.savedObjects.registerType({
-  name: 'my-type',
-  mappings: {
-    properties: {
-      foo: { type: 'keyword' },
-      bar: { type: 'keyword' }
+    name: 'my-type',
+    mappings: {
+        properties: {
+            foo: { type: 'keyword' },
+            bar: { type: 'keyword' }
+        },
     },
-  },
-  versions: {
-    0: {
-        schema: schema.object({
-            foo: schema.string()
-        }, { unknowns: 'ignore' }),
-    },
-    1: {
-        schema: schema.object({
-            foo: schema.string(),
-            bar: schema.maybe(schema.string()),
-        }, { unknowns: 'ignore' }),
-    },
-  }
+    versions: {
+        0: { // We don't need a new data-model version, we just add fields to this schema
+            schema: schema.object({
+                foo: schema.string(),
+                bar: schema.maybe(schema.string()),
+            }, { unknowns: 'ignore' }),
+        },
+    }
 });
